@@ -48,6 +48,8 @@ class YahooProvider(BaseProvider):
                 f"No data found for symbol '{symbol}'."
             )
 
+        print(df.columns)
+
         df = DataCleaner.clean(df)
 
         DataValidator.validate(df)
