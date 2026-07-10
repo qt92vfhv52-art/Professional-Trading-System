@@ -51,17 +51,21 @@ class DataCleaner:
     @classmethod
     def _normalize_column_names(cls, df: pd.DataFrame) -> pd.DataFrame:
 
-        renamed = {}
+    # Handle MultiIndex columns (e.g. yfinance)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = [col[0] for col in df.columns]
 
-        for column in df.columns:
+    renamed = {}
 
-            key = column.strip().lower()
+    for column in df.columns:
 
-            if key in cls.COLUMN_MAPPING:
-                renamed[column] = cls.COLUMN_MAPPING[key]
+        key = str(column).strip().lower()
 
-        return df.rename(columns=renamed)
+        if key in cls.COLUMN_MAPPING:
+            renamed[column] = cls.COLUMN_MAPPING[key]
 
+    return df.rename(columns=renamed)
+        
     @staticmethod
     def _set_datetime_index(df: pd.DataFrame) -> pd.DataFrame:
 
