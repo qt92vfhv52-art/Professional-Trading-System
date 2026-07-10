@@ -49,7 +49,7 @@ class DataCleaner:
         return df
 
     @classmethod
-    def _normalize_column_names(cls, df: pd.DataFrame) -> pd.DataFrame:
+def _normalize_column_names(cls, df: pd.DataFrame) -> pd.DataFrame:
 
     # Handle MultiIndex columns (e.g. yfinance)
     if isinstance(df.columns, pd.MultiIndex):
